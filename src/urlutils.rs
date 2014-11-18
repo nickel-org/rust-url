@@ -12,10 +12,8 @@
 
 use super::{Url, UrlParser, RelativeSchemeData, NonRelativeSchemeData, FileLikeRelativeScheme};
 use super::UrlRelativeSchemeData;
-use parser::{
-    ParseResult, InvalidScheme,
-    CannotSetFileScheme, CannotSetJavascriptScheme, CannotSetNonRelativeScheme,
-};
+use parser::ParseResult;
+use parser::ParseError:: {InvalidScheme, CannotSetFileScheme, CannotSetJavascriptScheme, CannotSetNonRelativeScheme };
 use percent_encoding::{utf8_percent_encode_to, USERNAME_ENCODE_SET, PASSWORD_ENCODE_SET};
 
 

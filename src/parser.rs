@@ -6,12 +6,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+extern crate encoding;
 
 use std::ascii::AsciiExt;
 use std::fmt::{Formatter, FormatError, Show};
 use std::str::CharRange;
 
-use encoding;
+pub use self::ParseError::*;
+pub use self::Context::*;
 
 use super::{
     UrlParser, Url, RelativeSchemeData, NonRelativeSchemeData, Host, Domain,
@@ -645,7 +647,7 @@ pub fn parse_query<'a>(input: &'a str, context: Context, parser: &UrlParser)
     let encoded;
     let query_bytes = match parser.query_encoding_override {
         Some(encoding) => {
-            encoded = encoding.encode(query.as_slice(), encoding::EncodeReplace).unwrap();
+            encoded = encoding.encode(query.as_slice(), encoding::EncoderTrap::Replace).unwrap();
             encoded.as_slice()
         },
         None => query.as_bytes()  // UTF-8

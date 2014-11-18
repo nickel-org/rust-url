@@ -9,12 +9,11 @@
 use std::ascii::OwnedAsciiExt;
 use std::cmp;
 use std::fmt::{Formatter, FormatError, Show};
-use parser::{
-    ParseResult,
-    InvalidIpv6Address, EmptyHost, NonAsciiDomainsNotSupportedYet, InvalidDomainCharacter,
-};
-use percent_encoding::{from_hex, percent_decode};
+use parser::{ ParseError, ParseResult };
+use parser::ParseError::{ InvalidIpv6Address, EmptyHost, NonAsciiDomainsNotSupportedYet, InvalidDomainCharacter };
 
+use percent_encoding::{from_hex, percent_decode};
+pub use self::Host::{ Domain, Ipv6 };
 
 /// The host name of an URL.
 #[deriving(PartialEq, Eq, Clone)]

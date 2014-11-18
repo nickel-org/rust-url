@@ -117,7 +117,7 @@ assert!(css_url.serialize() == "http://servo.github.io/rust-url/main.css".to_str
 */
 
 
-#![feature(macro_rules, default_type_params)]
+#![feature(macro_rules, default_type_params, globs)]
 
 extern crate encoding;
 extern crate serialize;
@@ -128,15 +128,13 @@ use std::path;
 
 use encoding::EncodingRef;
 
-pub use host::{Host, Domain, Ipv6, Ipv6Address};
-pub use parser::{
-    ErrorHandler, ParseResult, ParseError,
-    EmptyHost, InvalidScheme, InvalidPort, InvalidIpv6Address, InvalidDomainCharacter,
-    InvalidCharacter, InvalidBackslash, InvalidPercentEncoded, InvalidAtSymbolInUser,
-    ExpectedTwoSlashes, NonUrlCodePoint, RelativeUrlWithScheme, RelativeUrlWithoutBase,
-    RelativeUrlWithNonRelativeBase, NonAsciiDomainsNotSupportedYet,
-    CannotSetFileScheme, CannotSetJavascriptScheme, CannotSetNonRelativeScheme,
-};
+pub use host::Host;
+pub use host::Host::{ Domain, Ipv6 };
+
+pub use parser::ParseError;
+pub use parser::ParseError::*;
+pub use parser::Context::*;
+pub use parser::{ ParseResult, ErrorHandler };
 
 #[deprecated = "Moved to the `percent_encoding` module"]
 pub use percent_encoding::{
@@ -145,6 +143,9 @@ pub use percent_encoding::{
     SIMPLE_ENCODE_SET, QUERY_ENCODE_SET, DEFAULT_ENCODE_SET, USERINFO_ENCODE_SET,
     PASSWORD_ENCODE_SET, USERNAME_ENCODE_SET, FORM_URLENCODED_ENCODE_SET, EncodeSet,
 };
+
+pub use self::SchemeData::*;
+pub use self::SchemeType::*;
 
 use format::{PathFormatter, UserInfoFormatter, UrlNoFragmentFormatter};
 
