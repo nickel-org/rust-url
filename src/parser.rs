@@ -509,13 +509,12 @@ fn parse_path<'a>(base_path: &[String], input: &'a str, context: Context,
                   -> ParseResult<(Vec<String>, &'a str)> {
     // Relative path state
     let mut path = base_path.to_vec();
-    let mut iter = input.char_ranges();
     let mut end;
     loop {
         let mut path_part = String::new();
         let mut ends_with_slash = false;
         end = input.len();
-        for (i, c, next_i) in iter {
+        for (i, c, next_i) in input.char_ranges() {
             match c {
                 '/' => {
                     ends_with_slash = true;
